@@ -101,7 +101,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Keep this to prevent horizontal scroll from content overflow */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -196,12 +196,13 @@ button {
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 0 var(--container-padding);
+  box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 section {
   padding: var(--spacing-xl) 0;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Ensure sections don't cause overflow */
 }
 
 .gradient-text {
@@ -380,15 +381,6 @@ section {
   z-index: 1;
 }
 
-.loader-particles .particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--color-primary);
-  border-radius: 50%;
-  opacity: 0.6;
-}
-
 .loader-particles .particle:nth-child(1) {
   top: 20%;
   left: 10%;
@@ -504,10 +496,9 @@ section {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.sub-heading
-{
-  font-size: clamp(1.4rem, 6vw, 4rem);
-  line-height: 1.2;
+.sub-heading {
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  line-height: 1.5;
 }
 
 @media (max-width: 768px) {
@@ -674,6 +665,7 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: var(--color-bg);
   z-index: 999;
   opacity: 0;
   visibility: hidden;
@@ -881,9 +873,10 @@ section {
 
 @media (max-width: 968px) {
   .hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack columns on smaller screens */
     gap: var(--spacing-md);
-    text-align: center;
+    text-align: center; /* Center text content */
+    padding: 0 var(--container-padding); /* Ensure padding is applied to the grid itself */
   }
 }
 
@@ -891,6 +884,8 @@ section {
   opacity: 0;
   transform: translateY(40px);
   animation: slideUp 1s ease-out 0.5s forwards;
+  width: 100%; /* Ensure it takes full available width */
+  max-width: 100%; /* Prevent overflow */
 }
 
 .hero-badge {
@@ -905,11 +900,16 @@ section {
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
+  /* Desktop: left-align */
+  margin-left: 0;
+  margin-right: auto;
 }
 
-.hero-badge svg {
-  width: 16px;
-  height: 16px;
+@media (max-width: 968px) {
+  .hero-badge {
+    margin-left: auto; /* Center badge when text is centered */
+    margin-right: auto;
+  }
 }
 
 .hero h1 {
@@ -920,12 +920,19 @@ section {
 .hero p {
   font-size: 1.25rem;
   margin-bottom: var(--spacing-lg);
-  max-width: 90%;
+  max-width: 90%; /* Keep a max-width for readability on larger screens */
+  word-wrap: break-word; /* Ensure long words break to prevent overflow */
+  overflow-wrap: break-word; /* Modern equivalent */
+  /* Desktop: left-align */
+  margin-left: 0;
+  margin-right: auto;
 }
 
 @media (max-width: 968px) {
   .hero p {
-    max-width: 100%;
+    max-width: 100%; /* Allow full width on smaller screens */
+    margin-left: auto; /* Center paragraph */
+    margin-right: auto; /* Center paragraph */
   }
 }
 
@@ -988,18 +995,16 @@ section {
   display: flex;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
+  /* Desktop: left-align */
+  justify-content: flex-start;
 }
 
 @media (max-width: 968px) {
   .hero-cta {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-cta {
-    flex-direction: column;
-    align-items: center;
+    justify-content: center; /* Center buttons on smaller screens */
+    max-width: 100%; /* Allow full width on smaller screens */
+    margin-left: auto; /* Center the CTA block itself */
+    margin-right: auto;
   }
 }
 
@@ -1009,11 +1014,16 @@ section {
   opacity: 0;
   transform: translateY(40px);
   animation: slideUp 1s ease-out 0.7s forwards;
+  width: 100%; /* Ensure it takes full width of its grid column */
+  max-width: 100%; /* Ensure it doesn't overflow its container */
+  margin-left: auto; /* Center the visual */
+  margin-right: auto; /* Center the visual */
 }
 
 @media (max-width: 968px) {
   .hero-visual {
-    order: -1;
+    /* Removed 'order: -1' to place it below content on smaller screens */
+    margin-bottom: var(--spacing-md); /* Add space between visual and text when stacked */
   }
 }
 
@@ -1021,9 +1031,11 @@ section {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-lg);
-  overflow: hidden;
+  overflow: hidden; /* Keep overflow hidden for the mockup content */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
+  width: 100%; /* Ensure mockup takes full width */
+  min-width: 0; /* Allow it to shrink below its content size if necessary */
 }
 
 .browser-header {
@@ -1033,6 +1045,27 @@ section {
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid var(--color-border);
+}
+
+@media (max-width: 480px) {
+  .browser-header {
+    padding: 0.75rem; /* Smaller padding for header */
+    gap: 0.75rem;
+  }
+}
+
+.browser-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+\
+  }
 }
 
 .browser-controls {
@@ -1068,6 +1101,16 @@ section {
   border-radius: var(--border-radius-sm);
   font-size: 0.875rem;
   color: var(--color-text-muted);
+  min-width: 0; /* Allow the URL bar to shrink */
+}
+
+@media (max-width: 480px) {
+  .browser-url {
+    padding: 0.4rem 0.8rem; /* Smaller padding for URL bar */
+    font-size: 0.8rem;
+    /* Consider reducing gap or font size further if still overflowing */
+    gap: 0.25rem;
+  }
 }
 
 .secure-badge {
@@ -1077,6 +1120,20 @@ section {
 .browser-content {
   padding: 2rem;
   min-height: 300px;
+}
+
+@media (max-width: 768px) {
+  .browser-content {
+    padding: 1.5rem;
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .browser-content {
+    padding: 1rem;
+    min-height: 200px;
+  }
 }
 
 .content-section {
@@ -1092,6 +1149,12 @@ section {
   animation: shimmer 2s infinite;
 }
 
+@media (max-width: 480px) {
+  .content-header {
+    height: 1.5rem;
+  }
+}
+
 .content-text {
   margin-bottom: 1.5rem;
 }
@@ -1102,6 +1165,12 @@ section {
   border-radius: var(--border-radius-sm);
   margin-bottom: 0.5rem;
   animation: shimmer 2s infinite 0.2s;
+}
+
+@media (max-width: 480px) {
+  .text-line {
+    height: 0.8rem;
+  }
 }
 
 .text-line.short {
@@ -1117,10 +1186,24 @@ section {
   animation: pulse 2s infinite;
 }
 
+@media (max-width: 480px) {
+  .content-button {
+    width: 100px;
+    height: 2rem;
+  }
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .content-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); /* Adjust grid for very small screens */
+    gap: 0.75rem;
+  }
 }
 
 .grid-item {
@@ -1128,6 +1211,12 @@ section {
   background: rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius-md);
   animation: shimmer 2s infinite;
+}
+
+@media (max-width: 480px) {
+  .grid-item {
+    height: 3rem;
+  }
 }
 
 .grid-item:nth-child(1) {
@@ -1152,13 +1241,19 @@ section {
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .floating-code {
+    display: none; /* Hide floating code on smaller screens */
+  }
+}
+
 .code-snippet {
   position: absolute;
   background: var(--gradient-primary);
   color: white;
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius-md);
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   font-weight: var(--font-weight-bold);
   font-size: 0.875rem;
   box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
@@ -1200,7 +1295,7 @@ section {
 
 @media (max-width: 480px) {
   .scroll-indicator {
-    bottom: var(--spacing-md);
+    bottom: 1rem; /* Adjusted to move it further down on mobile */
   }
 }
 
@@ -1266,8 +1361,7 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    linear-gradient(rgba(67, 97, 238, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(rgba(67, 97, 238, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(67, 97, 238, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
   opacity: 0.3;
@@ -1308,7 +1402,7 @@ section {
   position: relative;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
-  aspect-ratio: 16/10;
+  aspect-ratio: 16 / 10;
   cursor: pointer;
   transition: transform var(--transition-fast);
 }
@@ -1405,7 +1499,7 @@ section {
 
 @media (max-width: 768px) {
   .services-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack columns on smaller screens */
     gap: var(--spacing-sm);
   }
 }
@@ -1416,7 +1510,7 @@ section {
 
 @media (max-width: 968px) {
   .audit-service-card {
-    grid-column: span 1;
+    grid-column: span 1; /* Ensure it takes full width on medium screens */
   }
 }
 
@@ -1471,7 +1565,7 @@ section {
 }
 
 .service-card-content h3 {
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 0.5rem;
   color: var(--color-text);
 }
 
@@ -1515,7 +1609,8 @@ section {
 
 @media (max-width: 768px) {
   .audit-cta-button {
-    max-width: none;
+    max-width: 100%; /* Allow it to take full width of its parent */
+    width: auto; /* Let content determine width, but respect max-width */
   }
 }
 
@@ -1534,7 +1629,7 @@ section {
 
 @media (max-width: 768px) {
   .about-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack columns on smaller screens */
     gap: var(--spacing-sm);
   }
 }
@@ -1574,8 +1669,8 @@ section {
 
 .card-number {
   position: absolute;
-  top: -25px;
-  left: -25px;
+  top: -15px; /* Adjusted to move it slightly down */
+  left: -15px; /* Adjusted to move it slightly right */
   width: 60px;
   height: 60px;
   background: var(--gradient-primary);
@@ -1595,8 +1690,8 @@ section {
     width: 50px;
     height: 50px;
     font-size: 1rem;
-    top: -20px;
-    left: -20px;
+    top: -10px; /* Further adjustment for smaller mobile screens */
+    left: -10px; /* Further adjustment for smaller mobile screens */
   }
 }
 
@@ -1746,20 +1841,21 @@ section {
 
 .project-img {
   width: 100%;
-  height: 250px;
+  aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+  height: auto; /* Let height adjust based on aspect ratio */
   object-fit: cover;
   transition: transform var(--transition-medium);
 }
 
 @media (max-width: 768px) {
   .project-img {
-    height: 200px;
+    aspect-ratio: 4 / 3; /* Adjust aspect ratio for smaller screens if desired */
   }
 }
 
 @media (max-width: 480px) {
   .project-img {
-    height: 180px;
+    aspect-ratio: 16 / 9; /* Revert or keep for mobile */
   }
 }
 
@@ -1793,7 +1889,6 @@ section {
 .project-info p {
   margin-bottom: var(--spacing-sm);
   color: var(--color-text-muted);
-  font-size: 0.9rem;
 }
 
 @media (max-width: 480px) {
@@ -1832,7 +1927,7 @@ section {
 
 @media (max-width: 768px) {
   .process-step {
-    flex-direction: column;
+    flex-direction: column; /* Stack elements vertically */
     text-align: center;
     align-items: center;
     gap: var(--spacing-sm);
@@ -1908,7 +2003,7 @@ section {
 
 @media (max-width: 768px) {
   .step-connector {
-    display: none;
+    display: none; /* Hide connector on mobile when steps stack */
   }
 }
 
@@ -1930,7 +2025,7 @@ section {
 
 @media (max-width: 768px) {
   .testimonials-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack columns on smaller screens */
     gap: var(--spacing-sm);
   }
 }
@@ -2084,14 +2179,14 @@ section {
 
 @media (max-width: 768px) {
   .trust-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
     gap: var(--spacing-sm);
   }
 }
 
 @media (max-width: 480px) {
   .trust-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column on smallest screens */
   }
 }
 
@@ -2145,9 +2240,9 @@ section {
 
 @media (max-width: 968px) {
   .cta-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack columns on medium screens */
     gap: var(--spacing-lg);
-    text-align: center;
+    text-align: center; /* Center content when stacked */
   }
 }
 
@@ -2174,6 +2269,13 @@ section {
   font-weight: var(--font-weight-medium);
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 968px) {
+  .cta-badge {
+    margin-left: auto; /* Center badge when text is centered */
+    margin-right: auto;
+  }
 }
 
 .cta-left h2 {
@@ -2220,7 +2322,7 @@ section {
 
 @media (max-width: 968px) {
   .cta-feature {
-    justify-content: center;
+    justify-content: center; /* Center features when stacked */
   }
 }
 
@@ -2237,13 +2339,13 @@ section {
 
 @media (max-width: 968px) {
   .cta-buttons {
-    justify-content: center;
+    justify-content: center; /* Center buttons when stacked */
   }
 }
 
 @media (max-width: 480px) {
   .cta-buttons {
-    flex-direction: column;
+    /* Removed flex-direction: column; to keep them side-by-side */
     align-items: center;
   }
 }
@@ -2272,7 +2374,7 @@ section {
 
 @media (max-width: 968px) {
   .cta-guarantee {
-    justify-content: center;
+    justify-content: center; /* Center guarantee when stacked */
     text-align: center;
   }
 }
@@ -2302,7 +2404,7 @@ section {
 
 @media (max-width: 968px) {
   .cta-right {
-    order: -1;
+    order: -1; /* Move visual to top on smaller screens */
   }
 }
 
@@ -2317,6 +2419,12 @@ section {
   padding: var(--spacing-md);
   backdrop-filter: blur(10px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 480px) {
+  .audit-preview {
+    padding: var(--spacing-sm); /* Adjust padding for smallest screens */
+  }
 }
 
 .audit-header {
@@ -2484,8 +2592,7 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    linear-gradient(rgba(67, 97, 238, 0.05) 1px, transparent 1px),
+  background-image: linear-gradient(rgba(67, 97, 238, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(67, 97, 238, 0.05) 1px, transparent 1px);
   background-size: 30px 30px;
   opacity: 0.3;
@@ -2514,7 +2621,7 @@ section {
 
 @media (max-width: 768px) {
   .footer-content {
-    flex-direction: column;
+    flex-direction: column; /* Stack content vertically */
     text-align: center;
     gap: var(--spacing-md);
   }
@@ -2743,7 +2850,8 @@ a:focus-visible {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -2761,7 +2869,8 @@ a:focus-visible {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -2814,7 +2923,7 @@ a:focus-visible {
 @media (max-width: 768px) {
   .cursor,
   .cursor-follower {
-    display: none;
+    display: none; /* Hide custom cursor on touch devices */
   }
 }
 
