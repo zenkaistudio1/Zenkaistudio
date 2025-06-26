@@ -1064,21 +1064,8 @@ section {
   height: 12px;
   border-radius: 50%;
 }
-\
-  }
-}
-
-.browser-controls {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.control {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
+/* This closing brace was misplaced in the original CSS, causing issues. Removed it. */
+/* The following rules were also affected by the misplaced brace. */
 .control.close {
   background: #ff5f57;
 }
@@ -2021,12 +2008,61 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
+
+}
+.testimonial-carousel-container {
+  position: relative;
+  padding-bottom: var(--spacing-lg); /* Space for dots and navigation */
+  /* Add horizontal padding to ensure buttons don't touch edges */
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+@media (max-width: 768px) {
+  .testimonial-carousel-container {
+    padding-bottom: calc(var(--spacing-lg) + 20px); /* More space for navigation on mobile */
+    padding-left: 0; /* Remove container padding here, handled by grid */
+    padding-right: 0; /* Remove container padding here, handled by grid */
+  }
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  /* Default for desktop: grid layout */
 }
 
 @media (max-width: 768px) {
   .testimonials-grid {
-    grid-template-columns: 1fr; /* Stack columns on smaller screens */
-    gap: var(--spacing-sm);
+    display: flex; /* Change to flex for carousel */
+    overflow-x: scroll; /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Snap to cards */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    gap: var(--spacing-sm); /* Adjust gap for mobile */
+    margin-top: var(--spacing-md); /* Adjust margin for mobile */
+    padding-bottom: 1rem; /* Add padding for scrollbar */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    padding-left: var(--container-padding); /* Add padding to the grid itself for mobile */
+    padding-right: var(--container-padding); /* Add padding to the grid itself for mobile */
+  }
+
+  .testimonials-grid::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, Edge */
+  }
+
+  .testimonial-card {
+    flex: 0 0 calc(100% - var(--spacing-sm)); /* Each card takes full width minus gap */
+    scroll-snap-align: start; /* Snap to the start of each card */
+    scroll-margin-left: var(--spacing-sm); /* Ensure proper margin for snapping */
+    margin-right: var(--spacing-sm); /* Space between cards */
+    transform: translateY(0); /* Reset animation transform for carousel */
+    opacity: 1; /* Reset animation opacity for carousel */
+  }
+
+  .testimonial-card:last-child {
+    margin-right: 0; /* No margin after the last card */
   }
 }
 
@@ -2083,6 +2119,98 @@ section {
   margin-bottom: var(--spacing-md);
 }
 
+.carousel-navigation {
+  display: none; /* Hidden by default on desktop */
+  position: absolute;
+  bottom: 0; /* Position at the bottom of the container */
+  left: 0; /* Align to the left of the container */
+  width: 100%; /* Take full width of the container */
+  display: flex;
+  justify-content: center; /* Center the navigation elements */
+  align-items: center;
+  gap: 1rem; /* Space between buttons and dots */
+  padding: 1rem 0; /* Add vertical padding */
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .carousel-navigation {
+    display: flex; /* Show on mobile */
+  }
+}
+
+.carousel-button {
+  background: var(--color-carousel-nav);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  width: 48px; /* Slightly larger buttons */
+  height: 48px; /* Slightly larger buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+  z-index: 10; /* Ensure buttons are above other content */
+}
+
+.carousel-button:hover {
+  background: var(--color-carousel-nav-hover);
+  border-color: var(--color-primary);
+}
+
+.carousel-button svg {
+  width: 24px; /* Larger icons */
+  height: 24px; /* Larger icons */
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 0.75rem; /* More space between dots */
+  margin: 0 1rem;
+}
+
+.carousel-dots .dot {
+  width: 12px; /* Slightly larger dots */
+  height: 12px; /* Slightly larger dots */
+  background: var(--color-dot);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.carousel-dots .dot.active {
+  background: var(--color-dot-active);
+  transform: scale(1.2);
+}
+
+/* Ensure desktop grid layout is maintained */
+@media (min-width: 769px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-md);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding-left: 0; /* Remove mobile padding */
+    padding-right: 0; /* Remove mobile padding */
+  }
+
+  .testimonial-card {
+    flex: auto; /* Reset flex properties */
+    width: auto; /* Reset width */
+    margin-right: 0; /* Remove margin */
+    scroll-margin-left: 0; /* Reset scroll margin */
+  }
+
+  .carousel-navigation {
+    display: none; /* Hide carousel navigation on desktop */
+  }
+}
+
+
+
 .author-avatar {
   width: 60px;
   height: 60px;
@@ -2126,41 +2254,35 @@ section {
 }
 
 .testimonial-metrics {
-  display: flex;
-  gap: var(--spacing-md);
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid var(--color-border);
-}
-
-@media (max-width: 480px) {
-  .testimonial-metrics {
-    gap: var(--spacing-sm);
-  }
+  display: grid; /* Changed from flex */
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Added for grid layout */
+  gap: 1px; /* gap-px */
+  overflow: hidden;
+  border-top: 1px solid var(--color-border); /* border-t bg-border */
+  border-bottom-left-radius: var(--border-radius-lg); /* Use CSS variable */
+  border-bottom-right-radius: var(--border-radius-lg); /* Use CSS variable */
+  background-color: var(--color-border); /* border color */
 }
 
 .metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.02); /* bg-card */
+  padding: 1rem; /* p-4 */
   text-align: center;
 }
 
 .metric-number {
-  display: block;
-  font-size: 1.5rem;
+  font-size: 1.5rem; /* text-2xl */
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
-  line-height: 1;
-}
-
-@media (max-width: 480px) {
-  .metric-number {
-    font-size: 1.25rem;
-  }
+  color: var(--color-primary); /* primary */
 }
 
 .metric-label {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 0.875rem; /* text-sm */
+  color: var(--color-text-muted); /* muted-foreground */
 }
 
 /* Trust Indicators */
