@@ -2285,6 +2285,33 @@ section {
   color: var(--color-text-muted); /* muted-foreground */
 }
 
+.testimonial-dots {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+  }
+
+  .testimonial-dots .dot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-border);
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .testimonial-dots .dot.active {
+    background-color: var(--color-primary);
+    transform: scale(1.2);
+  }
+}
+
+
 /* Trust Indicators */
 .trust-indicators {
   margin-top: var(--spacing-xl);
