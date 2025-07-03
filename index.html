@@ -1003,9 +1003,14 @@
         <span class="footer-logo-sub">STUDIO</span>
       </div>
     </div>
-    <div class="footer-text">
-      <p>&copy; 2024 Zenkai Studio. All rights reserved. Crafted with passion and precision.</p>
-    </div>
+   <div class="footer-text">
+  <p>&copy; <span id="year"></span> Zenkai Studio. All rights reserved.</p>
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
   </div>
 </div>
 </footer>
