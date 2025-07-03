@@ -9,12 +9,10 @@
   --color-secondary: #3a0ca3;
   --color-accent: #f72585;
   --color-border: rgba(255, 255, 255, 0.1);
-
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   --gradient-text: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   --gradient-overlay: linear-gradient(180deg, rgba(5, 5, 23, 0) 0%, rgba(5, 5, 23, 0.8) 100%);
-
   /* Typography */
   --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
     "Helvetica Neue", sans-serif;
@@ -22,30 +20,25 @@
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
-
   /* Transitions */
   --transition-fast: 0.3s ease;
   --transition-medium: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   --transition-slow: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 4rem;
   --spacing-xl: 8rem;
-
   /* Border Radius */
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
   --border-radius-full: 999px;
-
   /* Shadows */
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
-
   /* Container */
   --container-max-width: 1200px;
   --container-padding: 2rem;
@@ -511,6 +504,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%; /* Ensure container takes full height of header */
 }
 
 /* Logo */
@@ -730,18 +724,23 @@ section {
 .mobile-nav li:nth-child(1) {
   transition-delay: 0.1s;
 }
+
 .mobile-nav li:nth-child(2) {
   transition-delay: 0.2s;
 }
+
 .mobile-nav li:nth-child(3) {
   transition-delay: 0.3s;
 }
+
 .mobile-nav li:nth-child(4) {
   transition-delay: 0.4s;
 }
+
 .mobile-nav li:nth-child(5) {
   transition-delay: 0.5s;
 }
+
 .mobile-nav li:nth-child(6) {
   transition-delay: 0.6s;
 }
@@ -1064,6 +1063,7 @@ section {
   height: 12px;
   border-radius: 50%;
 }
+
 /* This closing brace was misplaced in the original CSS, causing issues. Removed it. */
 /* The following rules were also affected by the misplaced brace. */
 .control.close {
@@ -1327,6 +1327,7 @@ section {
 .arrow-scroll span:nth-child(2) {
   animation-delay: 0.2s;
 }
+
 .arrow-scroll span:nth-child(3) {
   animation-delay: 0.4s;
 }
@@ -2008,8 +2009,8 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
-
 }
+
 .testimonial-carousel-container {
   position: relative;
   padding-bottom: var(--spacing-lg); /* Space for dots and navigation */
@@ -2047,11 +2048,9 @@ section {
     padding-left: var(--container-padding); /* Add padding to the grid itself for mobile */
     padding-right: var(--container-padding); /* Add padding to the grid itself for mobile */
   }
-
   .testimonials-grid::-webkit-scrollbar {
     display: none; /* Hide scrollbar for Chrome, Safari, Edge */
   }
-
   .testimonial-card {
     flex: 0 0 calc(100% - var(--spacing-sm)); /* Each card takes full width minus gap */
     scroll-snap-align: start; /* Snap to the start of each card */
@@ -2060,7 +2059,6 @@ section {
     transform: translateY(0); /* Reset animation transform for carousel */
     opacity: 1; /* Reset animation opacity for carousel */
   }
-
   .testimonial-card:last-child {
     margin-right: 0; /* No margin after the last card */
   }
@@ -2196,20 +2194,16 @@ section {
     padding-left: 0; /* Remove mobile padding */
     padding-right: 0; /* Remove mobile padding */
   }
-
   .testimonial-card {
     flex: auto; /* Reset flex properties */
     width: auto; /* Reset width */
     margin-right: 0; /* Remove margin */
     scroll-margin-left: 0; /* Reset scroll margin */
   }
-
   .carousel-navigation {
     display: none; /* Hide carousel navigation on desktop */
   }
 }
-
-
 
 .author-avatar {
   width: 60px;
@@ -2296,7 +2290,6 @@ section {
     gap: 8px;
     margin-top: 1rem;
   }
-
   .testimonial-dots .dot {
     width: 10px;
     height: 10px;
@@ -2304,13 +2297,11 @@ section {
     border-radius: 50%;
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
-
   .testimonial-dots .dot.active {
     background-color: var(--color-primary);
     transform: scale(1.2);
   }
 }
-
 
 /* Trust Indicators */
 .trust-indicators {
@@ -2551,11 +2542,7 @@ section {
   opacity: 1;
 }
 
-@media (max-width: 968px) {
-  .cta-right {
-    order: -1; /* Move visual to top on smaller screens */
-  }
-}
+/* REMOVED: @media (max-width: 968px) { .cta-right { order: -1; } } */
 
 .cta-visual {
   position: relative;
@@ -2908,30 +2895,39 @@ section {
 [data-delay="100"] {
   transition-delay: 0.1s;
 }
+
 [data-delay="200"] {
   transition-delay: 0.2s;
 }
+
 [data-delay="300"] {
   transition-delay: 0.3s;
 }
+
 [data-delay="400"] {
   transition-delay: 0.4s;
 }
+
 [data-delay="500"] {
   transition-delay: 0.5s;
 }
+
 [data-delay="600"] {
   transition-delay: 0.6s;
 }
+
 [data-delay="700"] {
   transition-delay: 0.7s;
 }
+
 [data-delay="800"] {
   transition-delay: 0.8s;
 }
+
 [data-delay="900"] {
   transition-delay: 0.9s;
 }
+
 [data-delay="1000"] {
   transition-delay: 1s;
 }
@@ -3080,5 +3076,18 @@ a:focus-visible {
 @media (prefers-color-scheme: dark) {
   .proof-image img {
     filter: brightness(0.9) contrast(1.1);
+  }
+}
+
+@media (max-width: 992px) {
+  .cta-section .cta-content {
+    flex-direction: column;
+    gap: 40px; /* Adjust spacing between the stacked sections */
+  }
+
+  .cta-section .cta-left,
+  .cta-section .cta-right {
+    width: 100%; /* Make them take full width when stacked */
+    max-width: none; /* Remove any max-width constraints */
   }
 }
